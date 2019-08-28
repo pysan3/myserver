@@ -11,31 +11,27 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { mapState } from 'vuex';
+import Axios from 'axios'
+import { mapState } from 'vuex'
 export default {
   data () {
     return {
       randomNumber: 0
-    };
+    }
   },
   computed: mapState([
     'base_url'
   ]),
   methods: {
     getRandom () {
-      axios.get(this.base_url + '/api/random')
-        .then(response => {
-          this.randomNumber = response.data.randomNumber;
-        })
-        .catch(error => {
-          console.log(error);
-        })
+      Axios.get(this.base_url + '/api/random').then(response => {
+        this.randomNumber = response.data.randomNumber
+      })
     }
   },
   created () {
-    this.$store.dispatch('logged_in', 'user');
-    this.getRandom();
+    this.$store.dispatch('logged_in', 'user')
+    this.getRandom()
   }
-};
+}
 </script>

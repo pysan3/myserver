@@ -14,9 +14,9 @@
 </template>
 
 <script>
-import axios from 'axios';
-import { mapState } from 'vuex';
-import * as types from '@/mutation-types';
+import axios from 'axios'
+import { mapState } from 'vuex'
+import * as types from '@/store/modules/mutation_types'
 export default {
   data () {
     return {
@@ -26,38 +26,34 @@ export default {
       user_name: '',
       user_password: '',
       msg: ['make a new account', 'already have an account']
-    };
+    }
   },
   computed: mapState([
     'base_url'
   ]),
   watch: {
     '$route' (to, _) { // eslint-disable-line no-unused-vars
-      this.accessID = (to.params.accessType === 'login') + 0;
+      this.accessID = (to.params.accessType === 'login') + 0
     }
   },
   methods: {
     tryAccess () {
       if (this.user_name.length * this.user_password.length === 0) {
-        alert('should not be zero charactors');
-        return;
+        alert('should not be zero charactors')
+        return
       }
       axios.post(this.base_url + '/api/' + this.accessTypes[this.accessID], {
         user_name: this.user_name,
         user_password: this.user_password
+      }).then(response => {
+        const responseID = response.data.user_id - 0
+        if (responseID !== -1 && response.data.isFound-0 === 1) {
+          this.$store.commit(types.USER_TOKEN, response.data.token)
+          this.$router.push(this.url)
+        } else {
+          alert(response.data.msg)
+        }
       })
-        .then(response => {
-          const responseID = response.data.user_id - 0;
-          if (responseID !== -1 && response.data.isFound-0 === 1) {
-            this.$store.commit(types.USER_TOKEN, response.data.token);
-            this.$router.push(this.url);
-          } else {
-            alert(response.data.msg);
-          }
-        })
-        .catch(error => {
-          console.log(error);
-        })
     },
     accessOpposite () {
       this.$router.push({
@@ -65,43 +61,43 @@ export default {
         params: {
           accessType: this.accessTypes[-1 * (this.accessID - 1)]
         }
-      });
+      })
     }
   },
   created () {
     if (this.accessID === 0 && this.$route.params.accessType !== 'signup') {
-      alert('url broken');
-      this.$router.push('/');
+      alert('url broken')
+      this.$router.push('/')
     }
   }
-};
+}
 </script>
 
 <style lang="stylus" scoped>
 h1, h2 {
-  font-weight: normal;
+  font-weight: normal
 }
 ul {
-  list-style-type: none;
-  padding: 0;
+  list-style-type: none
+  padding: 0
 }
 li {
-  display: inline-block;
-  margin: 0 10px;
+  display: inline-block
+  margin: 0 10px
 }
 a {
-  color: #42b983;
+  color: #42b983
 }
 .signup {
-  margin-top: 20px;
+  margin-top: 20px
 
-  display: flex;
-  flex-flow: column nowrap;
-  justify-content: center;
+  display: flex
+  flex-flow: column nowrap
+  justify-content: center
   align-items: center
 }
 input {
-  margin: 10px 0;
-  padding: 10px;
+  margin: 10px 0
+  padding: 10px
 }
 </style>

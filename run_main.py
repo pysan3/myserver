@@ -76,6 +76,16 @@ async def load_project(req, resp):
     else:
         resp.media = {'valid': '0'}
 
+@api.route('/api/manageproject/{command}/{name}')
+async def manage_project(req, resp, *, command, name):
+    user_id = backapp.verify_user((await req.media())['token'])
+    name = urllib.parse.unquote(name)
+    if user_id:
+        if command == 'create':
+            backapp.create_project(user_id, name)
+        elif command == 'delete':
+            backapp.delete_project(user_id, name)
+
 @api.route('/api/random')
 def random_number(req, resp):
     resp.media = {'randomNumber': random.randint(1, 100)}

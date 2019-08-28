@@ -1,4 +1,4 @@
-import * as types from 'mutation_types'
+import * as types from '@/store/modules/mutation_types'
 
 export default {
   [types.USER_TOKEN] (state, token) {
