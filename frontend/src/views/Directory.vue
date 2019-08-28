@@ -125,7 +125,7 @@ export default {
     sendCommand () {
       const vm = this
       let new_command = '!!', i = 1
-      while (new_command === '!!') {
+      while (new_command === '!!' && vm.command.length >= i) {
         new_command = vm.command[vm.command.length-(i++)]
       }
       this.connection.send(JSON.stringify({
