@@ -2,16 +2,19 @@
   <div id="app">
     <HeaderDefault/>
     <router-view/>
+    <FooterDefault/>
   </div>
 </template>
 
 <script>
 import HeaderDefault from '@/components/HeaderDefault'
+import FooterDefault from '@/components/FooterDefault'
 
 export default {
   name: 'app',
   components: {
-    HeaderDefault
+    HeaderDefault,
+    FooterDefault
   }
 }
 </script>

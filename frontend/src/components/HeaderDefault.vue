@@ -42,7 +42,7 @@ export default {
       is_loggedin: false
     }
   },
-  computed : mapState([
+  computed: mapState([
     'token',
     'base_url'
   ]),

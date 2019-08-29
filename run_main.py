@@ -86,6 +86,14 @@ async def manage_project(req, resp, *, command, name):
         elif command == 'delete':
             backapp.delete_project(user_id, name)
 
+@api.route('/api/kusa')
+async def github_kusa(req, resp):
+    github_name = backapp.github_user(backapp.verify_user((await req.media())['token']))
+    resp.media = {
+        'github_name': github_name,
+        'garden': backapp.github_kusa(github_name)
+    }
+
 @api.route('/api/random')
 def random_number(req, resp):
     resp.media = {'randomNumber': random.randint(1, 100)}

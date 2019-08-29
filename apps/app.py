@@ -6,6 +6,8 @@ import subprocess
 import hashlib
 import secrets
 from datetime import datetime
+import requests
+from bs4 import BeautifulSoup
 
 from apps.database import Session, Users, TokenTable
 from sqlalchemy.sql import exists
@@ -139,3 +141,37 @@ def create_project(user_id, name):
 
 def delete_project(user_id, name):
     shutil.rmtree(f'user_files/{user_id}/{name}')
+
+def github_user(user_id):
+    return 'pysan3'
+
+def github_kusa(name):
+    def color(count):
+        colors = ['#ebedf0', '#c6e48b', '#c6e48b', '#c6e48b', '#7bc96f']
+        if count <= 4:
+            return colors[count]
+        else:
+            c = Color(colors[4])
+            c.darken(0.1*(count-4))
+            return c.return_colorcode()
+    req = requests.Session()
+    days = BeautifulSoup(req.get(f'https://github.com/users/{name}/contributions').text, 'html.parser').find_all('rect', attrs={'class': 'day'})
+    return [{
+        'date': day['data-date'],
+        'day': (datetime.strptime(day['data-date'], '%Y-%m-%d').weekday() + 1) % 7,
+        'count': day['data-count'],
+        'color': color(int(day['data-count']))
+    } for day in days]
+
+class Color:
+    def __init__(self, c):
+        if isinstance(c, tuple):
+            self.color = c
+        else:
+            self.color = (int(c[1:3],16),int(c[3:5],16),int(c[5:7],16))
+    def return_rgb(self):
+        return self.color
+    def return_colorcode(self):
+        return f'#{self.color[0]:02X}{self.color[1]:02X}{self.color[2]:02X}'
+    def darken(self, ratio):
+        self.color = tuple(int(c * ratio) for c in self.color)
