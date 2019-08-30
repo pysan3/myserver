@@ -1,8 +1,5 @@
 import responder
 import random
-import os
-import sys
-import subprocess
 import urllib
 
 import apps.app as backapp

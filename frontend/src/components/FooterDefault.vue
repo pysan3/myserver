@@ -1,11 +1,7 @@
 <template>
   <footer>
     <div id="githubKusa">
-      <svg id="draw-kusa" width="722" heigh="122" class="onright">
-        <text width="10" height="10" x="33" y="39" text-anchor="end">Mon</text>
-        <text width="10" height="10" x="33" y="65" text-anchor="end">Wed</text>
-        <text width="10" height="10" x="33" y="91" text-anchor="end">Fri</text>
-      </svg>
+      <svg id="draw-kusa" width="722" heigh="122" class="onright"></svg>
     </div>
   </footer>
 </template>
@@ -41,7 +37,10 @@ export default {
           }
           html += `<rect fill="${g.color}" width="10" height="10" x="${column}" y="${g.day*13+13}"></rect>`
         })
-        document.getElementById('draw-kusa').innerHTML += html
+        document.getElementById('draw-kusa').innerHTML += html + `
+        <text width="10" height="10" x="33" y="39" text-anchor="end">Mon</text>
+        <text width="10" height="10" x="33" y="65" text-anchor="end">Wed</text>
+        <text width="10" height="10" x="33" y="91" text-anchor="end">Fri</text>`
       })
     }
   },
@@ -52,13 +51,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-div#githubKusa
+#githubKusa
   position relative
   overflow hidden
   width 722px
   height 122px
-  margin auto
-  .onright
-    position absolute
-    right 0px
+  float right
+
+.onright
+  position absolute
+  right 0px
 </style>

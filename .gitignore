@@ -10,3 +10,4 @@ static/
 *.sh
 *.sqlite3
 user_files/
+run_main.py
