@@ -35,7 +35,7 @@ export default {
               html += `<text width="10" height="10" x="${column}" y="12">${parseInt(month)}</text>`
             }
           }
-          html += `<rect fill="${g.color}" width="10" height="10" x="${column}" y="${g.day*13+13}"></rect>`
+          html += `<rect fill="${g.color}" width="10" height="10" x="${column}" y="${g.day*13+13}" class="kusa-day ${g.date} ${g.count}"></rect>`
         })
         document.getElementById('draw-kusa').innerHTML += html + `
         <text width="10" height="10" x="33" y="39" text-anchor="end">Mon</text>

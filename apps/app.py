@@ -174,4 +174,4 @@ class Color:
     def return_colorcode(self):
         return f'#{self.color[0]:02X}{self.color[1]:02X}{self.color[2]:02X}'
     def darken(self, ratio):
-        self.color = tuple(int(c * ratio) for c in self.color)
+        self.color = tuple(int(c * (1 - ratio)) for c in self.color)
