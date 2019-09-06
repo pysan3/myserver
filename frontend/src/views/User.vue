@@ -7,13 +7,19 @@
     <router-link to="/about"><a>about</a></router-link>
     <br>
     <router-link to="/projects"><a>your projects</a></router-link>
+    <ToDoList/>
   </div>
 </template>
 
 <script>
 import Axios from 'axios'
 import { mapState } from 'vuex'
+import ToDoList from '@/components/ToDoList'
+
 export default {
+  components: {
+    ToDoList
+  },
   data () {
     return {
       randomNumber: 0

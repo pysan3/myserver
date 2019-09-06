@@ -2,7 +2,7 @@ from __future__ import absolute_import, division, print_function, unicode_litera
 import logging
 from datetime import datetime
 
-from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
@@ -30,6 +30,18 @@ class TokenTable(Base):
 	token = Column('token', String)
 	user_id = Column('user_id', Integer)
 
-	def ___repr__(self):
+	def __repr__(self):
 		return '<TokenTable(id=%s, token=%s, user_id=%s, )>' \
 			% (self.id, self.token, self.user_id)
+
+class ToDoList(Base):
+	__tablename__ = 'todolist'
+	id = Column('id', Integer, primary_key=True)
+	user_id = Column('user_id', Integer)
+	list_name = Column('list_name', String)
+	name = Column('name', String)
+	isDone = Column('isDone', Boolean)
+
+	def __repr__(self):
+		return '<ToDoList(id=%s, user_id=%s, list_name=%s, name=%s, isDone=%s, )>' \
+			% (self.id, self.user_id, self.list_name, self.name, self.isDone)

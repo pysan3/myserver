@@ -14,6 +14,11 @@ def init_db():
         'user_name': 'master',
         'user_password': 'password'
     })
+    backapp.create_todoList(1, 'ASAP', '')
+    backapp.create_todoList(1, 'ASAP', 'here we go')
+    backapp.create_todoList(1, 'not for now', '')
+    backapp.create_todoList(1, 'not for now', 'you are doing all right')
+    backapp.create_todoList(1, 'not for now', 'keep it going!')
 
 if __name__ == '__main__':
     create_new_database()

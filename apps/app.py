@@ -9,7 +9,7 @@ from datetime import datetime
 import requests
 from bs4 import BeautifulSoup
 
-from apps.database import Session, Users, TokenTable
+from apps.database import *
 from sqlalchemy.sql import exists
 
 def init_server():
@@ -143,6 +143,7 @@ def delete_project(user_id, name):
     shutil.rmtree(f'user_files/{user_id}/{name}')
 
 def github_user(user_id):
+    # TODO: here
     return 'pysan3'
 
 def github_kusa(name):
@@ -152,16 +153,17 @@ def github_kusa(name):
             return colors[count]
         else:
             c = Color(colors[4])
-            c.darken(0.1*(count-4))
+            c.darken(count-4)
             return c.return_colorcode()
-    req = requests.Session()
-    days = BeautifulSoup(req.get(f'https://github.com/users/{name}/contributions').text, 'html.parser').find_all('rect', attrs={'class': 'day'})
     return [{
         'date': day['data-date'],
         'day': (datetime.strptime(day['data-date'], '%Y-%m-%d').weekday() + 1) % 7,
         'count': day['data-count'],
         'color': color(int(day['data-count']))
-    } for day in days]
+    } for day in BeautifulSoup(
+        requests.Session().get(f'https://github.com/users/{name}/contributions').text,
+        'html.parser'
+    ).find_all('rect', attrs={'class': 'day'})]
 
 class Color:
     def __init__(self, c):
@@ -173,5 +175,27 @@ class Color:
         return self.color
     def return_colorcode(self):
         return f'#{self.color[0]:02X}{self.color[1]:02X}{self.color[2]:02X}'
-    def darken(self, ratio):
-        self.color = tuple(int(c * (1 - ratio)) for c in self.color)
+    def darken(self, stage):
+        for _ in range(int(stage)):
+            self.color = tuple(int(c * 0.9) for c in self.color)
+
+def load_todoList(user_id):
+    todolist = {}
+    session = Session()
+    for data in session.query(ToDoList).filter_by(user_id=user_id).all():
+        todolist.setdefault(data.list_name, [])
+        if len(data.name):
+            todolist[data.list_name].append({'name': data.name, 'isDone': data.isDone})
+    session.close()
+    return todolist
+
+def create_todoList(user_id, list_name, name):
+    session = Session()
+    session.add(ToDoList(
+        user_id=user_id,
+        list_name=list_name,
+        name=name,
+        isDone=False
+    ))
+    session.commit()
+    session.close()

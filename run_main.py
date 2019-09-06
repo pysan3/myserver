@@ -6,7 +6,7 @@ import apps.app as backapp
 
 api = responder.API(static_dir='./static', templates_dir='./static')
 api.add_route('/', static=True, websocket=True)
-backapp.init_server()
+# backapp.init_server()
 
 @api.route('/api/login')
 async def login(req, resp):
@@ -90,6 +90,17 @@ async def github_kusa(req, resp):
         'github_name': github_name,
         'garden': backapp.github_kusa(github_name)
     }
+
+@api.route('/api/todolist/{mode}')
+async def todoList_handler(req, resp, *, mode):
+    data = await req.media()
+    user_id = backapp.verify_user(data['token'])
+    if mode == 'load':
+        resp.media = backapp.load_todoList(user_id)
+    elif mode == 'createlist':
+        backapp.create_todoList(user_id, data['list_name'], '')
+    elif mode == 'createelement':
+        backapp.create_todoList(user_id, data['list_name'], data['name'])
 
 @api.route('/api/random')
 def random_number(req, resp):
