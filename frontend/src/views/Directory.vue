@@ -1,29 +1,37 @@
 <template>
-  <div class="directory">
-    <div class="inventory">
-      <h2>{{ user_name }}-{{ project }}</h2>
-      <button @click="new_file.type='file'">make new file</button>
-      <button @click="new_file.type='dir'">make new dir</button>
-      <input v-show="new_file.type!=='none'" type="text" value="" v-model="new_file.name" @change="newFile">
-      <div v-for="(item, index) in comment" :key="index">
-        <this-file :comment="item"/>
+  <div class="directory container-fluid">
+    <div class="row">
+      <div class="inventory col-md-3">
+        <h3>{{ user_name }}-{{ project }}</h3>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-outline-primary" @click="new_file.type='file'">make new file</button>
+          <button class="btn btn-outline-primary" @click="new_file.type='dir'">make new dir</button>
+          <input v-show="new_file.type!=='none'" type="text" value="" v-model="new_file.name" @change="newFile">
+        </div>
+        <div v-for="(item, index) in comment" :key="index">
+          <this-file :comment="item"/>
+        </div>
       </div>
-    </div>
-    <div class="working-space">
-      <div id="auto-save">
-        <button @click="if (autoSave!=='lost connection') autoSave=!autoSave">Auto Save</button>
-        <p>{{ autoSave }}</p>
-        <br>
-        <button @click="file_data = {}; working_text = ['', 0]">reload files</button>
-        <br>
-        <button @click="saveFile()">save now</button>
+      <div class="col-md-9">
+        <div class="working-space">
+          <div id="auto-save" class="file-navbar">
+            <div class="d-flex">
+              <div class="mr-auto"><h3>{{ working_text[0].replace(/.*\//, '') }}</h3></div>
+              <div v-show="autoSave!=='lost connection'"><button class="btn btn-outline-primary" @click="autoSave=!autoSave">{{ autoSave ? 'disable ' : ''}}auto save</button></div>
+              <div v-show="autoSave==='lost connection'"><button class="btn btn-danger">{{ autoSave }}</button></div>
+              <div><button class="btn btn-outline-primary" @click="file_data = {}; working_text = ['', 0]">reload files</button></div>
+              <div><button class="btn btn-outline-primary" @click="saveFile()">save</button></div>
+            </div>
+          </div>
+          <textarea id="file-data" class="file-data w-100" v-model="file_data[working_text[0]]" @change="working_text[1]+=1"></textarea>
+        </div>
+        <hr>
+        <div class="terminal bg-dark text-white panel">
+          <h4>terminal</h4>
+          <input id="send-command" class="w-100" type="text" v-model="command[command.length-1]" @change="sendCommand">
+          <textarea id="result-data" class="terminal-data w-100" readonly v-model="result_data"></textarea>
+        </div>
       </div>
-      <textarea v-model="file_data[working_text[0]]" @change="working_text[1]+=1" name="file-data" id="file-data"></textarea>
-    </div>
-    <div class="terminal">
-      <input type="text" v-model="command[command.length-1]" id="send-command" @change="sendCommand">
-      <h4>results</h4>
-      <textarea readonly v-model="result_data" name="result-data" id="result-data"></textarea>
     </div>
   </div>
 </template>
@@ -71,9 +79,11 @@ export default {
         }
       })
     },
-    change_Workingspace (from, to) {
+    changeWorkingspace (from, to) {
       this.saveFile()
-      if (Object.keys(this.file_data).includes(to)) this.working_text = [to, 0]
+      if (Object.keys(this.file_data).includes(to)) {
+        this.working_text = [to, 0]
+      }
       else {
         Axios.post(this.base_url + '/api/userfile/' + to, {
           token: this.token
@@ -145,7 +155,7 @@ export default {
     this.$store.watch(
       (state, getters) => getters.current_fileID,
       (to, from) => {
-        this.change_Workingspace(from, to)
+        this.changeWorkingspace(from, to)
       }
     )
     this.ws_connection()
@@ -175,48 +185,14 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-.directory, .inventory, .working-space, .terminal
-  margin 0px
-  border 0px
-  padding 0px
-
+hr
+  margin 4px 0px
 .directory
-  width 100%
-  height 100%
-  background-color black
-  overflow hidden
-  color black
-
-li
-  list-style none
-
-.inventory
-  width 200px
-  min-height 100%
-  float left
-  background-color bisque
-  li
-    font-size medium
-
+  padding 0px 8px
 .working-space
-  width calc(100% - 200px)
-  float right
-  background-color #fff
-  div#auto-save
-    float right
-
+  .file-data
+    height 50vh
 .terminal
-  width calc(100% - 200px)
-  min-height 100%
-  float right
-  background-color azure
-
-textarea
-  width 85%
-
-#file-data
-  height 50vh
-
-#result-data
-  height 15vh
+  .terminal-data
+    height 15vh
 </style>

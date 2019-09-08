@@ -1,5 +1,5 @@
 <template>
-  <header>
+  <div id="headerDefault" class="header-default sticky-top">
     <b-navbar toggleable="sm" type="dark" variant="dark" sticky="true">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-brand to="/user" class="mr-auto">MyServer</b-navbar-brand>
@@ -22,13 +22,13 @@
           </b-nav-item-dropdown>
           <b-nav-item-dropdown right id="user-dropdown">
             <template slot="button-content">User</template>
-            <b-dropdown-item><router-link to="/user">Profile</router-link></b-dropdown-item>
+            <b-dropdown-item to="/user">Profile</b-dropdown-item>
             <b-dropdown-item @click="logout">Sign Out</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
-  </header>
+  </div>
 </template>
 
 <script>

@@ -1,14 +1,15 @@
 <template>
-  <footer>
+  <div id="footerDefault" class="footer-default fixed-bottom">
     <div id="githubKusa">
       <svg id="draw-kusa" width="722" heigh="122" class="onright"></svg>
     </div>
-  </footer>
+  </div>
 </template>
 
 <script>
 import Axios from 'axios'
 import { mapState } from 'vuex'
+import $ from 'jquery'
 
 export default {
   data () {
@@ -32,16 +33,17 @@ export default {
             column += 13
             if (g.date.split('-')[1] !== month) {
               month = g.date.split('-')[1]
-              html += `<text width="10" height="10" x="${column}" y="12">${parseInt(month)}</text>`
+              html += `<text width="10" height="10" x="${column}" y="18" fill="white">${parseInt(month)}</text>`
             }
           }
-          html += `<rect fill="${g.color}" width="10" height="10" x="${column}" y="${g.day*13+13}" class="kusa-day ${g.date} ${g.count}"></rect>`
+          html += `<rect fill="${g.color}" width="10" height="10" x="${column}" y="${g.day*13+19}" class="kusa-day"><title>${g.count} contributions on ${g.date}</title></rect>`
         })
         document.getElementById('draw-kusa').innerHTML += html + `
-        <text width="10" height="10" x="33" y="39" text-anchor="end">Mon</text>
-        <text width="10" height="10" x="33" y="65" text-anchor="end">Wed</text>
-        <text width="10" height="10" x="33" y="91" text-anchor="end">Fri</text>`
+        <text width="10" height="10" x="33" y="45" text-anchor="end" fill="white">Mon</text>
+        <text width="10" height="10" x="33" y="71" text-anchor="end" fill="white">Wed</text>
+        <text width="10" height="10" x="33" y="97" text-anchor="end" fill="white">Fri</text>`
       })
+      $('[data-toggle="tooltip"]').tooltip()
     }
   },
   mounted () {
@@ -57,6 +59,7 @@ export default {
   width 722px
   height 122px
   float right
+  margin 0px 12px
 
 .onright
   position absolute
