@@ -69,9 +69,11 @@ export default {
           list_name: this.new_element.name
         }).then(() => {
           this.todolist[this.new_element.name] = []
+          this.new_element = {'show': '', 'name': ''}
         })
+      } else {
+          this.new_element = {'show': '', 'name': ''}
       }
-      this.new_element = {'show': '', 'name': ''}
     },
     create_element (list) {
       Axios.post(this.base_url + '/api/todolist/createelement', {
@@ -100,7 +102,9 @@ export default {
         list_name: list,
         name: el.name
       }).then(() => {
-        this.todolist[list] = this.todolist[list].filter(n => n.name !== el.name)
+        const index = this.todolist[list].indexOf(el)
+        if (index !== -1) this.todolist[list].splice(index, 1)
+        this.$forceUpdate()
       })
     },
     done_element (list, el) {
@@ -110,6 +114,7 @@ export default {
         name: el.name
       }).then(() => {
         el.isDone = !el.isDone
+        this.$forceUpdate()
       })
     },
     show_isDone (list) {
