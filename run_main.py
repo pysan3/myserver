@@ -101,6 +101,12 @@ async def todoList_handler(req, resp, *, mode):
         backapp.create_todoList(user_id, data['list_name'], '')
     elif mode == 'createelement':
         backapp.create_todoList(user_id, data['list_name'], data['name'])
+    elif mode == 'deletelist':
+        backapp.deletelist_todoList(user_id, data['list_name'])
+    elif mode == 'doneelement':
+        backapp.deleteelement_todoList(user_id, data['list_name'], data['name'], 'done')
+    elif mode == 'deleteelement':
+        backapp.deleteelement_todoList(user_id, data['list_name'], data['name'], 'delete')
 
 @api.route('/api/random')
 def random_number(req, resp):

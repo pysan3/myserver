@@ -199,3 +199,24 @@ def create_todoList(user_id, list_name, name):
     ))
     session.commit()
     session.close()
+
+def deleteelement_todoList(user_id, list_name, name, done):
+    session = Session()
+    data = session.query(ToDoList).filter_by(
+        user_id=user_id,
+        list_name=list_name,
+        name=name
+    ).first()
+    if done == 'done':
+        data.isDone = not data.isDone
+    elif done == 'delete':
+        session.delete(data)
+    session.commit()
+    session.close()
+
+def deletelist_todoList(user_id, list_name):
+    session = Session()
+    for data in session.query(ToDoList).filter_by(user_id=user_id, list_name=list_name).all():
+        session.delete(data)
+    session.commit()
+    session.close()

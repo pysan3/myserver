@@ -1,5 +1,5 @@
 <template>
-  <div id="headerDefault" class="header-default sticky-top">
+  <div id="headerDefault" class="header-default">
     <b-navbar toggleable="sm" type="dark" variant="dark" sticky="true">
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
       <b-navbar-brand to="/user" class="mr-auto">MyServer</b-navbar-brand>

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header><HeaderDefault/></header>
+    <header class="sticky-top"><HeaderDefault/></header>
     <div class="small-size"><router-view/></div>
     <footer class="bg-dark fixed-bottom"><FooterDefault/></footer>
   </div>

@@ -43,7 +43,6 @@ export default {
         <text width="10" height="10" x="33" y="71" text-anchor="end" fill="white">Wed</text>
         <text width="10" height="10" x="33" y="97" text-anchor="end" fill="white">Fri</text>`
       })
-      $('[data-toggle="tooltip"]').tooltip()
     }
   },
   mounted () {
