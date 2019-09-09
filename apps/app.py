@@ -114,7 +114,7 @@ def username(user_id):
     session.close()
     return name.user_name
 
-def run_command(user_id, project, command, cat):
+def run_command(user_id, project, command):
     in_file = subprocess.PIPE
     out_file = subprocess.PIPE
     project_path = f'user_files/{user_id}/{project}/'
@@ -131,7 +131,7 @@ def run_command(user_id, project, command, cat):
             in_file = open(project_path + command[index + 1], 'r')
             command = command[:index]
         elif c == '|':
-            in_file = run_command(user_id, project, command[:index], True).stdout
+            in_file = run_command(user_id, project, command[:index]).stdout
             command = command[index + 1:]
             break
     return subprocess.run(command, cwd=project_path, stdin=in_file, stdout=out_file, stderr=out_file)

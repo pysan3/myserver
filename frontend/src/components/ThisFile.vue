@@ -1,5 +1,5 @@
 <template>
-  <div class="current-file">
+  <div class="current-file text-left">
     <div @click="hidden">
       <img id="file-type" v-show="comment.type==='dir'" :src="images.folder" alt="folder" height="16px" width="16px">
       <img id="file-type" v-show="comment.type==='file'" :src="images.file" alt="file" height="16px" width="16px">

@@ -9,7 +9,7 @@
               <button type="button" id="dropdownList" class="btn btn-secondary dropdown-toggle btn-sm" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
               <div class="dropdown-menu" aria-labelledby="dropdownList">
                 <a class="dropdown-item" @click="delete_list(list)">delete</a>
-                <a class="dropdown-item" @click="show_isDone(list)">{{ showAll[list] }}show done items</a>
+                <a class="dropdown-item" @click="show_isDone(list)">{{ showAll[list]?'hide':'show' }} done items</a>
               </div>
             </div>
           </div>

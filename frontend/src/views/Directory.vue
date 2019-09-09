@@ -4,8 +4,8 @@
       <div class="inventory col-md-3">
         <h3>{{ user_name }}-{{ project }}</h3>
         <div class="d-flex justify-content-end">
-          <button class="btn btn-outline-primary" @click="new_file.type='file'">make new file</button>
-          <button class="btn btn-outline-primary" @click="new_file.type='dir'">make new dir</button>
+          <button class="btn btn-outline-primary btn-sm" @click="new_file.type='file'">make new file</button>
+          <button class="btn btn-outline-primary btn-sm" @click="new_file.type='dir'">make new dir</button>
           <input v-show="new_file.type!=='none'" type="text" value="" v-model="new_file.name" @change="newFile">
         </div>
         <div v-for="(item, index) in comment" :key="index">
@@ -28,7 +28,7 @@
         <hr>
         <div class="terminal bg-dark text-white panel">
           <h4>terminal</h4>
-          <input id="send-command" class="w-100" type="text" v-model="command[command.length-1]" @change="sendCommand">
+          <input id="send-command" class="w-100" type="text" v-model="command[command.length-1]" @change="sendCommand" placeholder=">">
           <textarea id="result-data" class="terminal-data w-100" readonly v-model="result_data"></textarea>
         </div>
       </div>
@@ -74,7 +74,6 @@ export default {
           this.comment = resp.data.comment
           this.comment.splice()
         } else {
-          alert('wrong access')
           this.$store.dispatch('logged_in', `directory-${this.project}`)
         }
       })

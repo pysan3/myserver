@@ -1,3 +1,3 @@
 import apps.app as backapp
 
-print(backapp.load_todoList(1))
+print(backapp.run_command(1, 'new', 'python sleep.py'.split()))

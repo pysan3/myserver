@@ -57,7 +57,7 @@ async def ws_terminal(ws):
             if user_id != backapp.verify_user(data['token']):
                 break
             if len(data['command'].split()) > 0:
-                res = backapp.run_command(user_id, project, data['command'].split(), False).stdout
+                res = backapp.run_command(user_id, project, data['command'].split()).stdout
                 if res is None:
                     res = ''.encode('utf-8')
                 await ws.send_json({'result': res.decode('utf-8')})
