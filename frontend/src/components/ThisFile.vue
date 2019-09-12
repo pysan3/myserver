@@ -15,7 +15,7 @@
 
 <script>
 import ThisFile from '@/components/ThisFile'
-import * as types from '@/store/modules/mutation_types'
+import * as types from '@/mutation_types'
 
 export default {
   name: 'this-file',

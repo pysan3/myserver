@@ -16,9 +16,6 @@ export default {
     return {
       randomNumber: 0
     }
-  },
-  created () {
-    this.$store.dispatch('logged_in', 'user')
   }
 }
 </script>

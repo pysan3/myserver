@@ -2,11 +2,17 @@
   <div class="directory container-fluid">
     <div class="row">
       <div class="inventory col-md-3">
-        <h3>{{ user_name }}-{{ project }}</h3>
-        <div class="d-flex justify-content-end">
-          <button class="btn btn-outline-primary btn-sm" @click="new_file.type='file'">make new file</button>
-          <button class="btn btn-outline-primary btn-sm" @click="new_file.type='dir'">make new dir</button>
-          <input v-show="new_file.type!=='none'" type="text" value="" v-model="new_file.name" @change="newFile">
+        <div class="row no-gutters">
+          <div class="col-lg-auto">
+            <h3 class="text-left">{{ user_name }}-{{ project }}</h3>
+          </div>
+          <div class="col-lg-auto ml-auto align-self-end">
+            <div class="d-flex justify-content-end">
+              <button class="btn btn-outline-primary btn-sm" @click="new_file.type='file'">new file</button>
+              <button class="btn btn-outline-primary btn-sm" @click="new_file.type='dir'">new dir</button>
+              <input v-show="new_file.type!=='none'" type="text" value="" v-model="new_file.name" @change="newFile">
+            </div>
+          </div>
         </div>
         <div v-for="(item, index) in comment" :key="index">
           <this-file :comment="item"/>
@@ -16,11 +22,11 @@
         <div class="working-space">
           <div id="auto-save" class="file-navbar">
             <div class="d-flex">
-              <div class="mr-auto"><h3>{{ working_text[0].replace(/.*\//, '') }}</h3></div>
+              <div class="mr-auto align-self-end"><h3>{{ working_text[0].replace(/.*\//, '') }}</h3></div>
               <div v-show="autoSave!=='lost connection'"><button class="btn btn-outline-primary" @click="autoSave=!autoSave">{{ autoSave ? 'disable ' : ''}}auto save</button></div>
               <div v-show="autoSave==='lost connection'"><button class="btn btn-danger">{{ autoSave }}</button></div>
-              <div><button class="btn btn-outline-primary" @click="file_data = {}; working_text = ['', 0]">reload files</button></div>
-              <div><button class="btn btn-outline-primary" @click="saveFile()">save</button></div>
+              <div v-show="autoSave!=='lost connection'"><button class="btn btn-outline-primary" @click="file_data = {}; working_text = ['', 0]">reload files</button></div>
+              <div v-show="autoSave!=='lost connection'"><button class="btn btn-outline-primary" @click="saveFile()">save</button></div>
             </div>
           </div>
           <textarea id="file-data" class="file-data w-100" v-model="file_data[working_text[0]]" @change="working_text[1]+=1"></textarea>
@@ -73,8 +79,6 @@ export default {
           this.user_name = resp.data.user_name
           this.comment = resp.data.comment
           this.comment.splice()
-        } else {
-          this.$store.dispatch('logged_in', `directory-${this.project}`)
         }
       })
     },
@@ -146,7 +150,6 @@ export default {
     }
   },
   created () {
-    this.$store.dispatch('logged_in', `directory-${this.project}`)
     this.load_files()
     this.working_text = ['', 0]
   },
@@ -186,6 +189,8 @@ export default {
 <style lang="stylus" scoped>
 hr
   margin 4px 0px
+h3
+  margin 5px 0px 0px 0px
 .directory
   padding 0px 8px
 .working-space

@@ -38,9 +38,6 @@ export default {
           this.user_name = resp.data.user_name
           this.projects = resp.data.projects
           this.comment.splice()
-        } else {
-          alert('wrong access')
-          this.$store.dispatch('logged_in', 'projects')
         }
       })
     },

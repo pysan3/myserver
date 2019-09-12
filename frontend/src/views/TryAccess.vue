@@ -5,8 +5,8 @@
     <input type="password" placeholder="Password" v-model="user_password">
     <button @click="tryAccess">{{ accessTypes[accessID] }}!!</button>
     <p>
-      {{ msg[-1 * (accessID - 1)] }}
-      <button @click="accessOpposite">{{ accessTypes[-1 * (accessID - 1)] }}</button>
+      {{ msg[accessID^1] }}
+      <button @click="accessOpposite">{{ accessTypes[accessID^1] }}</button>
     </p>
     <p>user_name {{ user_name }}</p>
     <p>password {{ user_password }}</p>
@@ -14,15 +14,15 @@
 </template>
 
 <script>
-import axios from 'axios'
+import Axios from 'axios'
 import { mapState } from 'vuex'
-import * as types from '@/store/modules/mutation_types'
+import * as types from '@/mutation_types'
 export default {
   data () {
     return {
       accessTypes: ['signup', 'login'],
-      accessID: (this.$route.params.accessType === 'login') + 0,
-      url: '/' + this.$route.params.url.replace(/-/g, '/'),
+      accessID: Number(this.$route.params.accessType === 'login'),
+      url: this.$route.params.url.replace(/-/g, '/'),
       user_name: '',
       user_password: '',
       msg: ['make a new account', 'already have an account']
@@ -33,7 +33,7 @@ export default {
   ]),
   watch: {
     '$route' (to, _) { // eslint-disable-line no-unused-vars
-      this.accessID = (to.params.accessType === 'login') + 0
+      this.accessID = Number(to.params.accessType === 'login')
     }
   },
   methods: {
@@ -42,7 +42,7 @@ export default {
         alert('should not be zero charactors')
         return
       }
-      axios.post(this.base_url + '/api/' + this.accessTypes[this.accessID], {
+      Axios.post(this.base_url + '/api/' + this.accessTypes[this.accessID], {
         user_name: this.user_name,
         user_password: this.user_password
       }).then(response => {

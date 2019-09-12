@@ -108,9 +108,5 @@ async def todoList_handler(req, resp, *, mode):
     elif mode == 'deleteelement':
         backapp.deleteelement_todoList(user_id, data['list_name'], data['name'], 'delete')
 
-@api.route('/api/random')
-def random_number(req, resp):
-    resp.media = {'randomNumber': random.randint(1, 100)}
-
 if __name__ == '__main__':
     api.run()
