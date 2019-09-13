@@ -1,6 +1,9 @@
 <template>
-  <div id="footerDefault" class="footer-default fixed-bottom">
-    <div id="githubKusa">
+  <div id="footerDefault" class="bg-dark">
+    <div v-show="github_name===''">
+      <p class="text-light">not logged in yet</p>
+    </div>
+    <div id="githubKusa" v-show="github_name!==''">
       <svg id="draw-kusa" width="722" heigh="122" class="onright"></svg>
     </div>
   </div>
@@ -9,7 +12,6 @@
 <script>
 import Axios from 'axios'
 import { mapState } from 'vuex'
-import $ from 'jquery'
 
 export default {
   data () {
@@ -27,6 +29,7 @@ export default {
         token: this.token
       }).then(resp => {
         this.github_name = resp.data.github_name
+        if (this.github_name === '') return
         let html = '', column = 22, month = null
         resp.data.garden.forEach(g => {
           if (g.day === 0) {
@@ -47,6 +50,12 @@ export default {
   },
   mounted () {
     this.loadKusa()
+    this.$store.watch(
+      (state, getters) => getters.current_token,
+      (to, from) => { // eslint-disable-line no-unused-vars
+        this.loadKusa()
+      }
+    )
   }
 }
 </script>

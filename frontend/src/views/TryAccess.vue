@@ -25,6 +25,7 @@ export default {
       url: this.$route.params.url.replace(/-/g, '/'),
       user_name: '',
       user_password: '',
+      github_email: '',
       msg: ['make a new account', 'already have an account']
     }
   },
@@ -44,7 +45,8 @@ export default {
       }
       Axios.post(this.base_url + '/api/' + this.accessTypes[this.accessID], {
         user_name: this.user_name,
-        user_password: this.user_password
+        user_password: this.user_password,
+        github_name: this.github_name
       }).then(response => {
         const responseID = response.data.user_id - 0
         if (responseID !== -1 && response.data.isFound-0 === 1) {

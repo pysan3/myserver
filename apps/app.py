@@ -1,7 +1,6 @@
 import numpy as np
 import os
 import shutil
-from glob import glob
 import subprocess
 import hashlib
 import secrets
@@ -35,15 +34,15 @@ def login(data):
     return {'isFound': len(user), 'token': new_token(user_id), 'msg': msg}
 
 def signup(data):
-    name = data['user_name']
     user_id = -1
     session = Session()
-    user = session.query(Users).filter_by(user_name=name).all()
+    user = session.query(Users).filter_by(user_name=data['user_name']).all()
     if len(user) == 0:
         user_id = session.query(Users).count() + 1
         session.add(Users(
-            user_name=name,
+            user_name=data['user_name'],
             user_password=hashlib.sha256(data['user_password'].encode()).hexdigest(),
+            github_name=data['github_name'],
             created_at=datetime.now().isoformat(' ', 'seconds')
         ))
         session.commit()
@@ -110,7 +109,7 @@ def load_project(user_id):
 
 def username(user_id):
     session = Session()
-    name = session.query(Users).filter_by(id=user_id).first()
+    name = session.query(Users).get(user_id)
     session.close()
     return name.user_name
 
@@ -134,7 +133,7 @@ def run_command(user_id, project, command):
             in_file = run_command(user_id, project, command[:index]).stdout
             command = command[index + 1:]
             break
-    return subprocess.run(command, cwd=project_path, stdin=in_file, stdout=out_file, stderr=out_file)
+    return subprocess.run(' '.join(command), shell=True, cwd=project_path, stdin=in_file, stdout=out_file, stderr=out_file)
 
 def create_project(user_id, name):
     os.mkdir(f'user_files/{user_id}/{name}')
@@ -143,8 +142,10 @@ def delete_project(user_id, name):
     shutil.rmtree(f'user_files/{user_id}/{name}')
 
 def github_user(user_id):
-    # TODO: here
-    return 'pysan3'
+    session = Session()
+    name = session.query(Users).get(user_id).github_name
+    session.close()
+    return name
 
 def github_kusa(name):
     def color(count):

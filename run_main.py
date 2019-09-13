@@ -1,5 +1,4 @@
 import responder
-import random
 import urllib
 
 import apps.app as backapp
@@ -85,11 +84,17 @@ async def manage_project(req, resp, *, command, name):
 
 @api.route('/api/kusa')
 async def github_kusa(req, resp):
-    github_name = backapp.github_user(backapp.verify_user((await req.media())['token']))
-    resp.media = {
-        'github_name': github_name,
-        'garden': backapp.github_kusa(github_name)
-    }
+    user_id = backapp.verify_user((await req.media())['token'])
+    if user_id:
+        github_name = backapp.github_user(user_id)
+        resp.media = {
+            'github_name': github_name,
+            'garden': backapp.github_kusa(github_name)
+        }
+    else:
+        resp.media = {
+            'github_name': '',
+        }
 
 @api.route('/api/todolist/{mode}')
 async def todoList_handler(req, resp, *, mode):

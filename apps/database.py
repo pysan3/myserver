@@ -1,7 +1,3 @@
-from __future__ import absolute_import, division, print_function, unicode_literals
-import logging
-from datetime import datetime
-
 from sqlalchemy import create_engine, Column, Integer, String, Boolean
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
@@ -18,11 +14,12 @@ class Users(Base):
 	id = Column('id', Integer, primary_key=True)
 	user_name = Column('user_name', String)
 	user_password = Column('user_password', String)
+	github_name = Column('github_name', String)
 	created_at = Column('created_at', String)
 
 	def __repr__(self):
-		return '<Users(id=%s, user_name=%s, user_password=%s, created_at=%s, )>' \
-			% (self.id, self.user_name, self.user_password, self.created_at)
+		return '<Users(id=%s, user_name=%s, user_password=%s, github_name=%s, created_at=%s, )>' \
+			% (self.id, self.user_name, self.user_password, self.github_name, self.created_at)
 
 class TokenTable(Base):
 	__tablename__ = 'tokentable'

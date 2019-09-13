@@ -2,7 +2,7 @@
   <div id="app">
     <header class="sticky-top"><HeaderDefault/></header>
     <div class="small-size"><router-view/></div>
-    <footer class="bg-dark fixed-bottom"><FooterDefault/></footer>
+    <FooterDefault class="fixed-bottom"/>
   </div>
 </template>
 
