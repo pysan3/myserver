@@ -3,11 +3,11 @@
     <h2>{{ accessTypes[accessID] }}</h2>
     <input type="text" placeholder="Username" v-model="user_name">
     <input type="password" placeholder="Password" v-model="user_password">
+    <input v-show="!accessID" type="text" placeholder="github name" v-model="github_name">
     <button @click="tryAccess">{{ accessTypes[accessID] }}!!</button>
-    <p>
-      {{ msg[accessID^1] }}
-      <button @click="accessOpposite">{{ accessTypes[accessID^1] }}</button>
-    </p>
+    <p>{{ msg[accessID^1] }}</p>
+    <button @click="accessOpposite">{{ accessTypes[accessID^1] }}</button>
+    <br>
     <p>user_name {{ user_name }}</p>
     <p>password {{ user_password }}</p>
   </div>
@@ -25,7 +25,7 @@ export default {
       url: this.$route.params.url.replace(/-/g, '/'),
       user_name: '',
       user_password: '',
-      github_email: '',
+      github_name: '',
       msg: ['make a new account', 'already have an account']
     }
   },

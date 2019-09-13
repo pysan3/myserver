@@ -149,7 +149,7 @@ def github_user(user_id):
 
 def github_kusa(name):
     def color(count):
-        colors = ['#ebedf0', '#c6e48b', '#c6e48b', '#c6e48b', '#7bc96f']
+        colors = ['#ebedf0', '#c6e48b', '#b5dc8f', '#9bd17b', '#7bc96f']
         if count <= 4:
             return colors[count]
         else:
