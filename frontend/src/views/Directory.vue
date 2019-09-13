@@ -151,7 +151,6 @@ export default {
   },
   created () {
     this.load_files()
-    this.working_text = ['', 0]
   },
   mounted () {
     this.$store.watch(
