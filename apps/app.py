@@ -175,7 +175,7 @@ class Color:
     def return_rgb(self):
         return self.color
     def return_colorcode(self):
-        return f'#{self.color[0]:02X}{self.color[1]:02X}{self.color[2]:02X}'
+        return f'#{self.color[0]:02x}{self.color[1]:02x}{self.color[2]:02x}'
     def darken(self, stage):
         for _ in range(int(stage)):
             self.color = tuple(int(c * 0.9) for c in self.color)

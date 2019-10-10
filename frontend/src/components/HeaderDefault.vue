@@ -6,8 +6,8 @@
       <b-collapse id="nav-collapse" is-nav>
         <b-navbar-nav>
           <b-nav-item v-show="is_loggedin" to="/projects">Projects</b-nav-item>
-          <b-nav-item v-show="!is_loggedin" to="/tryaccess/login/user">Login</b-nav-item>
-          <b-nav-item v-show="!is_loggedin" to="/tryaccess/signup/user">Signup</b-nav-item>
+          <b-nav-item v-show="!is_loggedin" to="/tryaccess/login/-user">Login</b-nav-item>
+          <b-nav-item v-show="!is_loggedin" to="/tryaccess/signup/-user">Signup</b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-form>
