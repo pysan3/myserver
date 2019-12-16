@@ -15,7 +15,7 @@ const routerOptions = [
 const routes = routerOptions.map(route => ({
   path: route.path,
   name: `${route.component}`.toLowerCase(),
-  component: () => import(`@/views/${route.component}.vue`),
+  component: () => import(`../src/views/${route.component}.vue`),
   meta: {
     requiredAuth: route.requiredAuth
   }

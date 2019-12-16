@@ -34,7 +34,7 @@
 <script>
 import Axios from 'axios'
 import { mapState } from 'vuex'
-import * as types from '@/mutation_types'
+import * as types from '../mutation_types'
 
 export default {
   data () {

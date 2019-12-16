@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-import * as types from '@/mutation_types'
+import * as types from '../src/mutation_types'
 Vue.use(Vuex)
 
 const state = {

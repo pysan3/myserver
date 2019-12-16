@@ -7,8 +7,8 @@
 </template>
 
 <script>
-import HeaderDefault from '@/components/HeaderDefault'
-import FooterDefault from '@/components/FooterDefault'
+import HeaderDefault from '../src/components/HeaderDefault'
+import FooterDefault from '../src/components/FooterDefault'
 
 export default {
   name: 'app',

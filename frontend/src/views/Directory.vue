@@ -45,7 +45,7 @@
 <script>
 import { mapState } from 'vuex'
 import Axios from 'axios'
-import ThisFile from '@/components/ThisFile'
+import ThisFile from '../src/components/ThisFile'
 
 export default {
   components: {

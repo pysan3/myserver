@@ -14,16 +14,16 @@
 </template>
 
 <script>
-import ThisFile from '@/components/ThisFile'
-import * as types from '@/mutation_types'
+import ThisFile from '../src/components/ThisFile'
+import * as types from '../src/mutation_types'
 
 export default {
   name: 'this-file',
   data () {
     return {
       images: {
-        folder: require('@/assets/folder.png'),
-        file: require('@/assets/file.png')
+        folder: require('../src/assets/folder.png'),
+        file: require('../src/assets/file.png')
       }
     }
   },
